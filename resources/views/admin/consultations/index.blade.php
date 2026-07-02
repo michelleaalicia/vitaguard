@@ -85,11 +85,9 @@
 
                                     <td>
 
-                                        <a href="{{ route('admin.consultations.edit', $consultation) }}"
-                                            class="btn btn-warning btn-sm">
-
-                                            <i class="bi bi-pencil"></i>
-
+                                        <a href="{{ route('admin.consultations.show', $consultation) }}"
+                                            class="btn btn-info btn-sm">
+                                            <i class="bi bi-eye"></i>
                                         </a>
 
                                         <form action="{{ route('admin.consultations.destroy', $consultation) }}" method="POST"

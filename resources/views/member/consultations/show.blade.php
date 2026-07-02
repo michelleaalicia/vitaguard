@@ -14,7 +14,7 @@
 
                     <h4>
 
-                        Dr. {{ $consultation->booking->doctor->user->name }}
+                        {{ $consultation->booking->doctor->user->name }}
 
                     </h4>
 
@@ -24,24 +24,24 @@
 
                     @forelse($consultation->messages as $message)
 
-                                        <div class="mb-3
-                        @if($message->sender_id == auth()->id())
-                            text-end
-                        @endif">
+                        <div class="mb-3
+                                        @if($message->sender_id == auth()->id())
+                                            text-end
+                                        @endif">
 
-                                            <div class="d-inline-block
-                        p-3 rounded
-                        @if($message->sender_id == auth()->id())
-                            bg-primary text-white
-                        @else
-                            bg-light
-                        @endif">
+                            <div class="d-inline-block
+                                        p-3 rounded
+                                        @if($message->sender_id == auth()->id())
+                                            bg-primary text-white
+                                        @else
+                                            bg-light
+                                        @endif">
 
-                                                {{ $message->message }}
+                                {{ $message->message }}
 
-                                            </div>
+                            </div>
 
-                                        </div>
+                        </div>
 
                     @empty
 

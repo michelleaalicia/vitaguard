@@ -30,7 +30,16 @@ class ConsultationController extends Controller
      */
     public function show(Consultation $consultation)
     {
-        abort(404);
+        $consultation->load([
+            'booking.member',
+            'booking.doctor.user',
+            'messages.sender'
+        ]);
+
+        return view(
+            'admin.consultations.show',
+            compact('consultation')
+        );
     }
     /**
      * Show the form for editing the specified resource.

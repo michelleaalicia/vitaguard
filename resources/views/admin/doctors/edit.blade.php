@@ -26,15 +26,19 @@
 
                 <div class="card-body">
 
-                    <form action="{{ route('admin.doctors.update', $doctor) }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('admin.doctors.update', $doctor->id) }}" method="POST"
+                        enctype="multipart/form-data">
 
                         @csrf
-                        @method('PUT')
+
+                        <input type="hidden" name="_method" value="PUT">
 
                         @include('admin.doctors._form')
 
-                        <button class="btn btn-primary">
+                        <button type="submit" class="btn btn-primary mt-3">
+
                             Update Doctor
+
                         </button>
 
                     </form>

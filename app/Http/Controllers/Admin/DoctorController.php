@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreDoctorRequest;
 use App\Models\Doctor;
@@ -74,10 +75,9 @@ class DoctorController extends Controller
         return view('admin.doctors.edit', compact('doctor', 'user'));
     }
 
-    public function update(UpdateDoctorRequest $request, Doctor $doctor)
+    public function update(Request $request, Doctor $doctor)
     {
-        dd('masuk update');
-        DB::transaction(function () use ($request, $doctor) {
+        try {
 
             $doctor->user->update([
                 'name' => $request->name,
@@ -88,8 +88,8 @@ class DoctorController extends Controller
 
             if ($request->hasFile('photo')) {
 
-                if ($doctor->photo && Storage::disk('public')->exists($doctor->photo)) {
-                    Storage::disk('public')->delete($doctor->photo);
+                if ($photo) {
+                    Storage::disk('public')->delete($photo);
                 }
 
                 $photo = $request->file('photo')->store('doctors', 'public');
@@ -100,15 +100,20 @@ class DoctorController extends Controller
                 'phone' => $request->phone,
                 'photo' => $photo,
                 'description' => $request->description,
-                'available_days' => implode(',', $request->available_days ?? []),
+                'available_days' => implode(',', $request->available_days),
                 'available_start' => $request->available_start,
                 'available_end' => $request->available_end,
             ]);
-        });
 
-        return redirect()
-            ->route('admin.doctors.index')
-            ->with('success', 'Doctor updated successfully.');
+            return redirect()
+                ->route('admin.doctors.index')
+                ->with('success', 'Doctor updated successfully.');
+
+        } catch (\Exception $e) {
+
+            dd($e->getMessage(), $e->getTraceAsString());
+
+        }
     }
 
     public function destroy(Doctor $doctor)

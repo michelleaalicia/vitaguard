@@ -45,7 +45,7 @@
                                     <td>{{ $loop->iteration }}</td>
 
                                     <td>
-                                        Dr. {{ $consultation->booking->doctor->user->name }}
+                                        {{ $consultation->booking->doctor->user->name }}
                                     </td>
 
                                     <td>

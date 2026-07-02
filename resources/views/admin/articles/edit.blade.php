@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Add Article')
+@section('title', 'Edit Article')
 
 @section('content')
 
@@ -9,7 +9,7 @@
 
             <div class="d-flex justify-content-between align-items-center">
 
-                <h3>Add Article</h3>
+                <h3>Edit Article</h3>
 
                 <a href="{{ route('admin.articles.index') }}" class="btn btn-secondary">
                     Back
@@ -28,14 +28,16 @@
 
                 <div class="card-body">
 
-                    <form action="{{ route('admin.articles.store') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('admin.articles.update', $article) }}" method="POST"
+                        enctype="multipart/form-data">
 
                         @csrf
+                        @method('PUT')
 
                         @include('admin.articles._form')
 
                         <button type="submit" class="btn btn-primary">
-                            Save Article
+                            Update Article
                         </button>
 
                     </form>

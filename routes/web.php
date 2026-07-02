@@ -47,7 +47,7 @@ Route::middleware(['auth', 'role:admin'])
         Route::resource('articles', ArticleController::class);
         Route::resource('bookings', BookingController::class);
         Route::resource('consultations', ConsultationController::class)
-            ->except(['create', 'store']);
+            ->only(['index', 'show', 'destroy']);
     });
 
 Route::middleware(['auth', 'role:doctor'])
