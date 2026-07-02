@@ -1,2 +1,6 @@
 *
 !.gitignore
+!doctors/
+!doctors/**
+!articles/
+!articles/**
