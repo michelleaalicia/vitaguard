@@ -82,18 +82,17 @@
           <!--begin::User Menu Dropdown-->
           <li class="nav-item dropdown user-menu">
             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-              <img src="{{ asset('adminlte/assets/img/user2-160x160.jpg') }}" class="user-image rounded-circle shadow"
+              <img src="{{ asset('adminlte/assets/img/admin.jpg') }}" class="user-image rounded-circle shadow"
                 alt="User Image" />
               <span class="d-none d-md-inline">{{ auth()->user()->name }}</span>
             </a>
             <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
               <!--begin::User Image-->
               <li class="user-header text-bg-primary">
-                <img src="{{ asset('adminlte/assets/img/user2-160x160.jpg') }}" class="rounded-circle shadow"
+                <img src="{{ asset('adminlte/assets/img/admin.jpg') }}" class="rounded-circle shadow"
                   alt="User Image" />
-                <p>
-                  {{ auth()->user()->name }} - Administrator
-                  <small>Administrator</small>
+                <p class="mb-0">
+                  Administrator
                 </p>
               </li>
               <!--end::User Image-->
@@ -103,10 +102,6 @@
               <!--end::Menu Body-->
               <!--begin::Menu Footer-->
               <li class="user-footer">
-                <a href="{{ route('profile.edit') }}" class="btn btn-outline-secondary">
-                  Profile
-                </a>
-
                 <form action="{{ route('logout') }}" method="POST" class="float-end">
                   @csrf
                   <button type="submit" class="btn btn-outline-danger">

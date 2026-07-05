@@ -100,11 +100,6 @@
                     </button>
                 </form>
 
-                <span class="me-3">
-
-                    Hi, {{ Auth::user()->name }}
-
-                </span>
             </div>
 
         </div>

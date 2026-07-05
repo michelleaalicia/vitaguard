@@ -93,7 +93,6 @@
                   alt="User Image" />
                 <p>
                   {{ auth()->user()->name }} - Doctor
-                  <small>Doctor</small>
                 </p>
               </li>
               <!--end::User Image-->
