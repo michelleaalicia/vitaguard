@@ -18,6 +18,7 @@ use App\Http\Controllers\Member\ArticleController as MemberArticleController;
 use App\Http\Controllers\Member\ConsultationController as MemberConsultationController;
 use App\Http\Controllers\Member\ConsultationMessageController as MemberConsultationMessageController;
 use App\Http\Controllers\Doctor\ConsultationMessageController as DoctorConsultationMessageController;
+use App\Http\Controllers\Doctor\DoctorProfileController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -72,6 +73,11 @@ Route::middleware(['auth', 'role:doctor'])
             [DoctorConsultationMessageController::class, 'store']
         )->name('consultations.messages.store');
 
+        Route::get('/profile', [DoctorProfileController::class, 'edit'])
+            ->name('profile.edit');
+
+        Route::put('/profile', [DoctorProfileController::class, 'update'])
+            ->name('profile.update');
     });
 
 Route::middleware(['auth', 'role:member'])
