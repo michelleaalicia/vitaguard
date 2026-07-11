@@ -34,6 +34,36 @@ class BookingController extends Controller
 
     public function store(StoreMemberBookingRequest $request)
     {
+        $doctor = Doctor::findOrFail($request->doctor_id);
+
+        $bookingDay = date('l', strtotime($request->booking_date));
+
+        $availableDays = explode(',', $doctor->available_days);
+
+        if (!in_array($bookingDay, $availableDays)) {
+
+            return back()
+                ->withInput()
+                ->withErrors([
+                    'booking_date' => 'The selected doctor is not available on this day.'
+                ]);
+        }
+
+        $bookingTime = strtotime($request->booking_time);
+
+        $start = strtotime($doctor->available_start);
+
+        $end = strtotime($doctor->available_end);
+
+        if ($bookingTime < $start || $bookingTime > $end) {
+
+            return back()
+                ->withInput()
+                ->withErrors([
+                    'booking_time' => 'The selected time is outside the doctor\'s practice hours.'
+                ]);
+        }
+
         Booking::create([
             'member_id' => Auth::id(),
             'doctor_id' => $request->doctor_id,

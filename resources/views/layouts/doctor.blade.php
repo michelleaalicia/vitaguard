@@ -79,7 +79,7 @@
           </li>
           <!--end::Fullscreen Toggle-->
           @php
-            $doctor = \App\Models\Doctor::where('user_id', auth()->id())->first();
+          $doctor = \App\Models\Doctor::where('user_id', auth()->id())->first();
           @endphp
           <!--begin::User Menu Dropdown-->
           <li class="nav-item dropdown user-menu">
@@ -181,6 +181,13 @@
               </a>
             </li>
 
+            <li class="nav-item">
+              <a href="{{ route('doctor.history.index') }}" class="nav-link">
+                <i class="nav-icon bi bi-clock-history"></i>
+                <p>History</p>
+              </a>
+            </li>
+
           </ul>
           <!--end::Sidebar Menu-->
         </nav>
@@ -191,14 +198,14 @@
     <!--begin::App Main-->
     <main class="app-main">
       @if(session('success'))
-        <div class="container-fluid mt-3">
-          <div class="alert alert-success alert-dismissible fade show">
-            {{ session('success') }}
+      <div class="container-fluid mt-3">
+        <div class="alert alert-success alert-dismissible fade show">
+          {{ session('success') }}
 
-            <button type="button" class="btn-close" data-bs-dismiss="alert">
-            </button>
-          </div>
+          <button type="button" class="btn-close" data-bs-dismiss="alert">
+          </button>
         </div>
+      </div>
       @endif
       @yield('content')
     </main>
@@ -237,7 +244,7 @@
       scrollbarAutoHide: 'leave',
       scrollbarClickScroll: true,
     };
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function() {
       const sidebarWrapper = document.querySelector(SELECTOR_SIDEBAR_WRAPPER);
 
       // Disable OverlayScrollbars on mobile devices to prevent touch interference

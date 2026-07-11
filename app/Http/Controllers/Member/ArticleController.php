@@ -1,17 +1,27 @@
 <?php
 
 namespace App\Http\Controllers\Member;
-
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Article;
 
 class ArticleController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $articles = Article::latest()->paginate(9);
+        $search = $request->search;
 
-        return view('member.articles.index', compact('articles'));
+        $articles = Article::when($search, function ($query) use ($search) {
+            $query->where('title', 'like', "%{$search}%");
+        })
+            ->latest()
+            ->paginate(6)
+            ->withQueryString();
+
+        return view('member.articles.index', compact(
+            'articles',
+            'search'
+        ));
     }
 
     public function show(Article $article)

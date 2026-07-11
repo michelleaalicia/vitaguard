@@ -4,32 +4,32 @@
 
 @section('content')
 
-    <section class="py-5">
+<section class="py-5">
 
-        <div class="container">
+    <div class="container">
 
-            <div class="card shadow">
+        <div class="card shadow">
 
-                <div class="card-header">
+            <div class="card-header">
 
-                    <h4>
+                <h4>
 
-                        {{ $consultation->booking->doctor->user->name }}
+                    {{ $consultation->booking->doctor->user->name }}
 
-                    </h4>
+                </h4>
 
-                </div>
+            </div>
 
-                <div class="card-body" style="height:450px;overflow-y:auto;">
+            <div class="card-body" style="height:450px;overflow-y:auto;">
 
-                    @forelse($consultation->messages as $message)
+                @forelse($consultation->messages as $message)
 
-                        <div class="mb-3
+                <div class="mb-3
                                         @if($message->sender_id == auth()->id())
                                             text-end
                                         @endif">
 
-                            <div class="d-inline-block
+                    <div class="d-inline-block
                                         p-3 rounded
                                         @if($message->sender_id == auth()->id())
                                             bg-primary text-white
@@ -37,50 +37,63 @@
                                             bg-light
                                         @endif">
 
-                                {{ $message->message }}
+                        {{ $message->message }}
 
-                            </div>
-
-                        </div>
-
-                    @empty
-
-                        <p class="text-center">
-
-                            No messages yet.
-
-                        </p>
-
-                    @endforelse
+                    </div>
 
                 </div>
 
-                <div class="card-footer">
+                @empty
 
-                    <form action="{{ route('member.consultations.messages.store', $consultation) }}" method="POST">
+                <p class="text-center">
 
-                        @csrf
+                    No messages yet.
 
-                        <div class="input-group">
+                </p>
 
-                            <input type="text" name="message" class="form-control" placeholder="Type message...">
+                @endforelse
 
-                            <button class="btn btn-primary">
+            </div>
 
-                                Send
+            <div class="card-footer">
 
-                            </button>
 
-                        </div>
+                @if($consultation->status == 'Open')
 
-                    </form>
+                <form action="{{ route('doctor.consultations.messages.store', $consultation) }}"
+                    method="POST">
+
+                    @csrf
+
+                    <div class="input-group">
+
+                        <input type="text" name="message" class="form-control" placeholder="Type message...">
+
+                        <button class="btn btn-primary">
+
+                            Send
+
+                        </button>
+                    </div>
+
+                </form>
+
+                @else
+
+                <div class="alert alert-secondary">
+
+                    This consultation has been closed.
 
                 </div>
+
+                @endif
 
             </div>
 
         </div>
 
-    </section>
+    </div>
+
+</section>
 
 @endsection

@@ -1,35 +1,65 @@
-@extends('layouts.member')
+@extends('layouts.doctor')
 
 @section('title', 'Consultation')
 
 @section('content')
 
-    <section class="py-5">
+<section class="py-5">
 
-        <div class="container">
+    <div class="container">
 
-            <div class="card shadow">
+        <div class="d-flex justify-content-between align-items-center mb-3">
 
-                <div class="card-header">
+            <a href="{{ route('doctor.consultations.index') }}"
+                class="btn btn-secondary">
 
-                    <h4>
+                <i class="bi bi-arrow-left"></i>
+                Back
 
-                        {{ $consultation->booking->member->name }}
+            </a>
 
-                    </h4>
+        </div>
+        @if($consultation->status == 'Open')
 
-                </div>
+        <form action="{{ route('doctor.consultations.close', $consultation) }}"
+            method="POST"
+            class="d-inline">
 
-                <div class="card-body" style="height:450px;overflow-y:auto;">
+            @csrf
+            @method('PUT')
 
-                    @forelse($consultation->messages as $message)
+            <button class="btn btn-danger"
+                onclick="return confirm('Close this consultation?')">
 
-                        <div class="mb-3
+                Close Consultation
+
+            </button>
+
+        </form>
+
+        @endif
+        <div class="card shadow">
+
+            <div class="card-header">
+
+                <h4>
+
+                    {{ $consultation->booking->member->name }}
+
+                </h4>
+
+            </div>
+
+            <div class="card-body" style="height:450px;overflow-y:auto;">
+
+                @forelse($consultation->messages as $message)
+
+                <div class="mb-3
                                                         @if($message->sender_id == auth()->id())
                                                             text-end
                                                         @endif">
 
-                            <div class="d-inline-block
+                    <div class="d-inline-block
                                                         p-3 rounded
                                                         @if($message->sender_id == auth()->id())
                                                             bg-primary text-white
@@ -37,50 +67,62 @@
                                                             bg-light
                                                         @endif">
 
-                                {{ $message->message }}
+                        {{ $message->message }}
 
-                            </div>
-
-                        </div>
-
-                    @empty
-
-                        <p class="text-center">
-
-                            No messages yet.
-
-                        </p>
-
-                    @endforelse
+                    </div>
 
                 </div>
 
-                <div class="card-footer">
+                @empty
 
-                    <form action="{{ route('doctor.consultations.messages.store', $consultation) }}" method="POST">
+                <p class="text-center">
 
-                        @csrf
+                    No messages yet.
 
-                        <div class="input-group">
+                </p>
 
-                            <input type="text" name="message" class="form-control" placeholder="Type message...">
+                @endforelse
 
-                            <button class="btn btn-primary">
+            </div>
 
-                                Send
+            <div class="card-footer">
 
-                            </button>
+                @if($consultation->status == 'Open')
 
-                        </div>
+                <form action="{{ route('doctor.consultations.messages.store', $consultation) }}"
+                    method="POST">
 
-                    </form>
+                    @csrf
+
+                    <div class="input-group">
+
+                        <input type="text" name="message" class="form-control" placeholder="Type message...">
+
+                        <button class="btn btn-primary">
+
+                            Send
+
+                        </button>
+                    </div>
+
+                </form>
+
+                @else
+
+                <div class="alert alert-secondary">
+
+                    This consultation has been closed.
 
                 </div>
+
+                @endif
 
             </div>
 
         </div>
 
-    </section>
+    </div>
+
+</section>
 
 @endsection
