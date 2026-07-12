@@ -7,6 +7,7 @@ use App\Models\Doctor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
 
 class DoctorProfileController extends Controller
 {
@@ -31,8 +32,8 @@ class DoctorProfileController extends Controller
             'available_days' => 'required|array',
             'available_days.*' => 'in:Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday',
 
-            'available_start' => 'required|date_format:H:i:s',
-            'available_end' => 'required|date_format:H:i:s|after:available_start',
+            'available_start' => 'required',
+            'available_end' => 'required|after:available_start',
         ]);
 
         $doctor = Doctor::where('user_id', Auth::id())

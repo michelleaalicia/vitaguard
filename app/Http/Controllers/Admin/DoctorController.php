@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\UpdateDoctorRequest;
 use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
 
 class DoctorController extends Controller
 {
@@ -27,6 +28,7 @@ class DoctorController extends Controller
     {
         return view('admin.doctors.create');
     }
+
 
     public function store(StoreDoctorRequest $request)
     {
@@ -55,7 +57,6 @@ class DoctorController extends Controller
                 'available_start' => $request->available_start,
                 'available_end' => $request->available_end,
             ]);
-
         });
 
         return redirect()
@@ -108,11 +109,9 @@ class DoctorController extends Controller
             return redirect()
                 ->route('admin.doctors.index')
                 ->with('success', 'Doctor updated successfully.');
-
         } catch (\Exception $e) {
 
             dd($e->getMessage(), $e->getTraceAsString());
-
         }
     }
 

@@ -60,8 +60,7 @@
 
                 @if($consultation->status == 'Open')
 
-                <form action="{{ route('doctor.consultations.messages.store', $consultation) }}"
-                    method="POST">
+                <form action="{{ route('member.consultations.messages.store', $consultation) }}" method="POST">
 
                     @csrf
 
